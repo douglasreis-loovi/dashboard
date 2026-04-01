@@ -1,14 +1,32 @@
-import React from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from 'recharts';
-import { Activity, AlertCircle, AlertOctagon, Ghost, BarChart3 } from 'lucide-react';
+import React, { useState } from 'react';
+import { Activity, AlertCircle, AlertOctagon, Ghost, BarChart3, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 
 import historicoDados from './data/historico.json';
+import dispositivosDados from './data/dispositivos.json';
 import './App.css';
 
 const App: React.FC = () => {
-  // Pega o snapshot de hoje gerado pelo Python
   const hoje = historicoDados[historicoDados.length - 1] || {
     "total_analisado": 0, "mais_7_dias": 0, "mais_15_dias": 0, "mais_30_dias": 0, "mais_90_dias": 0
+  };
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 15;
+
+  const filteredData = dispositivosDados.filter((item: any) => {
+    const imeiMatch = String(item.imei).toLowerCase().includes(searchTerm.toLowerCase());
+    const contratoMatch = String(item.contrato_natural).toLowerCase().includes(searchTerm.toLowerCase());
+    return imeiMatch || contratoMatch;
+  });
+
+  const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const currentItems = filteredData.slice(startIndex, startIndex + itemsPerPage);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Volta pra primeira página ao pesquisar
   };
 
   return (
@@ -18,67 +36,94 @@ const App: React.FC = () => {
       </header>
 
       <main className="main-content">
-        {/* GRID DOS 5 CARDS */}
+        {/* CARDS */}
         <div className="kpi-grid">
           <div className="kpi-card total">
-            <div className="kpi-header">
-              <BarChart3 size={20} />
-              <h3>Total Analisado</h3>
-            </div>
+            <div className="kpi-header"><BarChart3 size={20} /><h3>Total Analisado</h3></div>
             <p className="kpi-value">{hoje.total_analisado}</p>
           </div>
-
           <div className="kpi-card info">
-            <div className="kpi-header">
-              <Activity size={20} />
-              <h3>&gt; 7 Dias</h3>
-            </div>
+            <div className="kpi-header"><Activity size={20} /><h3>&gt; 7 Dias</h3></div>
             <p className="kpi-value">{hoje.mais_7_dias}</p>
           </div>
-
           <div className="kpi-card warning">
-            <div className="kpi-header">
-              <AlertCircle size={20} />
-              <h3>&gt; 15 Dias</h3>
-            </div>
+            <div className="kpi-header"><AlertCircle size={20} /><h3>&gt; 15 Dias</h3></div>
             <p className="kpi-value">{hoje.mais_15_dias}</p>
           </div>
-
           <div className="kpi-card alert">
-            <div className="kpi-header">
-              <AlertOctagon size={20} />
-              <h3>&gt; 30 Dias</h3>
-            </div>
+            <div className="kpi-header"><AlertOctagon size={20} /><h3>&gt; 30 Dias</h3></div>
             <p className="kpi-value">{hoje.mais_30_dias}</p>
           </div>
-
           <div className="kpi-card danger">
-            <div className="kpi-header">
-              <Ghost size={20} />
-              <h3>&gt; 90 Dias</h3>
-            </div>
+            <div className="kpi-header"><Ghost size={20} /><h3>&gt; 90 Dias</h3></div>
             <p className="kpi-value">{hoje.mais_90_dias}</p>
           </div>
         </div>
 
-        {/* GRÁFICO DE HISTÓRICO */}
-        <div className="chart-container">
-          <h2>Tendência de Desconexão (Histórico)</h2>
-          <div style={{ width: '100%', height: 400 }}>
-            <ResponsiveContainer>
-              <LineChart data={historicoDados} margin={{ top: 20, right: 30, left: 0, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                <XAxis dataKey="data" stroke="#94a3b8" />
-                <YAxis stroke="#94a3b8" />
-                <Tooltip contentStyle={{ backgroundColor: '#1e293b', border: 'none', borderRadius: '8px', color: '#fff' }} />
-                <Legend />
-                <Line type="monotone" name="Total Analisado" dataKey="total_analisado" stroke="#94a3b8" strokeWidth={2} dot={false} />
-                <Line type="monotone" name="> 15 Dias" dataKey="mais_15_dias" stroke="#facc15" strokeWidth={2} />
-                <Line type="monotone" name="> 30 Dias" dataKey="mais_30_dias" stroke="#f97316" strokeWidth={3} />
-                <Line type="monotone" name="> 90 Dias" dataKey="mais_90_dias" stroke="#ef4444" strokeWidth={3} />
-              </LineChart>
-            </ResponsiveContainer>
+        {/* TABELA DE INVESTIGAÇÃO */}
+        <div className="table-section">
+          <div className="table-header">
+            <h2>Investigação de Dispositivos</h2>
+            <div className="search-box">
+              <Search size={18} className="search-icon" />
+              <input 
+                type="text" 
+                placeholder="Buscar por IMEI ou Chave Natural..." 
+                value={searchTerm}
+                onChange={handleSearch}
+              />
+            </div>
           </div>
+
+          <div className="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>IMEI</th>
+                  <th>Chave Natural</th>
+                  <th>Última Comunicação</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentItems.length > 0 ? (
+                  currentItems.map((item: any, index: number) => (
+                    <tr key={index}>
+                      <td className="font-mono">{item.imei}</td>
+                      <td>{item.contrato_natural}</td>
+                      <td>
+                        <span className={`status-badge ${item.ultima_localizacao === 'Sem Dados na API' || item.ultima_localizacao === 'Sem Dados' ? 'offline' : 'online'}`}>
+                          {item.ultima_localizacao}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                ) : (
+                  <tr>
+                    <td colSpan={3} className="empty-state">Nenhum dispositivo encontrado para a sua busca.</td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* CONTROLES DA PAGINAÇÃO */}
+          {totalPages > 1 && (
+            <div className="pagination">
+              <button 
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+              >
+                <ChevronLeft size={18} /> Anterior
+              </button>
+              <span>Página {currentPage} de {totalPages}</span>
+              <button 
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+              >
+                Próxima <ChevronRight size={18} />
+              </button>
+            </div>
+          )}
         </div>
       </main>
     </div>
