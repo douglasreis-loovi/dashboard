@@ -1,0 +1,173 @@
+/* ==========================================
+   Importando fonte moderna do Google Fonts
+   ========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ==========================================
+   Variáveis de Cores (Paleta Dark Mode)
+   ========================================== */
+:root {
+  --bg-dark: #0f172a;       /* Fundo geral da página */
+  --bg-card: #1e293b;       /* Fundo dos painéis e gráficos */
+  --text-main: #f8fafc;     /* Cor do texto principal */
+  --text-muted: #94a3b8;    /* Cor do texto secundário */
+  --border-color: #334155;  /* Cor das linhas separadoras */
+  
+  /* Cores de Alerta */
+  --accent-yellow: #facc15;
+  --accent-orange: #f97316;
+  --accent-red: #ef4444;
+  
+  /* Sombras Brilhantes (Glow Effect) */
+  --glow-yellow: rgba(250, 204, 21, 0.15);
+  --glow-orange: rgba(249, 115, 22, 0.15);
+  --glow-red: rgba(239, 68, 68, 0.15);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+/* ==========================================
+   Layout Principal
+   ========================================== */
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+/* ==========================================
+   Cabeçalho
+   ========================================== */
+.header {
+  margin-bottom: 3rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  letter-spacing: -0.5px;
+}
+
+.header span {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ==========================================
+   Grid dos Cards Superiores (KPIs)
+   ========================================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.kpi-card {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 1.5rem 2rem;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.kpi-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Faixa de cor no topo do card e Sombra Iluminada */
+.kpi-card.info {
+  border-top: 4px solid var(--accent-yellow);
+  box-shadow: 0 15px 35px -10px var(--glow-yellow);
+}
+
+.kpi-card.warning {
+  border-top: 4px solid var(--accent-orange);
+  box-shadow: 0 15px 35px -10px var(--glow-orange);
+}
+
+.kpi-card.danger {
+  border-top: 4px solid var(--accent-red);
+  box-shadow: 0 15px 35px -10px var(--glow-red);
+}
+
+/* Título de dentro do Card */
+.kpi-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+}
+
+.kpi-header h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Pintando os ícones */
+.kpi-card.info .kpi-header svg { color: var(--accent-yellow); }
+.kpi-card.warning .kpi-header svg { color: var(--accent-orange); }
+.kpi-card.danger .kpi-header svg { color: var(--accent-red); }
+
+/* O Número Gigante */
+.kpi-value {
+  font-size: 3.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--text-main);
+}
+
+/* ==========================================
+   Área do Gráfico Principal
+   ========================================== */
+.chart-container {
+  background-color: var(--bg-card);
+  border-radius: 16px;
+  padding: 2.5rem;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 20px 40px -15px rgba(0,0,0,0.6);
+}
+
+.chart-container h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  color: var(--text-main);
+}
+
+/* Ajustes responsivos para telas menores */
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .chart-container {
+    padding: 1.5rem;
+  }
+}

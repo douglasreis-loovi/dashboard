@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-dark: #0f172a;
+  --bg-card: #1e293b;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: #334155;
+  
+  --color-total: #94a3b8;
+  --color-info: #facc15;
+  --color-warning: #fb923c;
+  --color-alert: #f97316;
+  --color-danger: #ef4444;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+}
+
+.dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2.5rem 2rem;
+}
+
+.header {
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.header span {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* ==========================================
+   Grid para suportar exatos 5 cards
+   ========================================== */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 3rem;
+}
+
+.kpi-card {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid var(--border-color);
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.kpi-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Cores do topo dos cards */
+.kpi-card.total { border-top: 4px solid var(--color-total); }
+.kpi-card.info { border-top: 4px solid var(--color-info); }
+.kpi-card.warning { border-top: 4px solid var(--color-warning); }
+.kpi-card.alert { border-top: 4px solid var(--color-alert); }
+.kpi-card.danger { border-top: 4px solid var(--color-danger); }
+
+/* Cores dos Ícones */
+.kpi-card.total .kpi-header svg { color: var(--color-total); }
+.kpi-card.info .kpi-header svg { color: var(--color-info); }
+.kpi-card.warning .kpi-header svg { color: var(--color-warning); }
+.kpi-card.alert .kpi-header svg { color: var(--color-alert); }
+.kpi-card.danger .kpi-header svg { color: var(--color-danger); }
+
+.kpi-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.kpi-header h3 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.kpi-value {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--text-main);
+}
+
+/* ==========================================
+   Gráfico
+   ========================================== */
+.chart-container {
+  background-color: var(--bg-card);
+  border-radius: 12px;
+  padding: 2rem;
+  border: 1px solid var(--border-color);
+}
+
+.chart-container h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-main);
+}
+
+@media (max-width: 768px) {
+  .dashboard-container { padding: 1.5rem 1rem; }
+  .header h1 { font-size: 1.5rem; }
+  .kpi-value { font-size: 2.2rem; }
+}
