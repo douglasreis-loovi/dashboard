@@ -1,10 +1,23 @@
-{
-    "data": "2026-04-01",
-    "total_analisado": 54867,
-    "comunicou_hoje": 50000, 
-    "nao_comunicou_hoje": 4867,
-    "mais_7_dias": 856,
-    "mais_15_dias": 706,
-    "mais_30_dias": 484,
-    "mais_90_dias": 67
-  }
+[
+    {
+        "data": "2026-04-01",
+        "total_analisado": 54867,
+        "comunicou_hoje": 50000,
+        "nao_comunicou_hoje": 4867,
+        "mais_7_dias": 856,
+        "mais_15_dias": 706,
+        "mais_30_dias": 484,
+        "mais_90_dias": 67
+    },
+    {
+        "data": "2026-04-07",
+        "ultima_atualizacao": "07/04/2026 \u00e0s 11:37",
+        "total_analisado": 54577,
+        "comunicou_hoje": 39067,
+        "nao_comunicou_hoje": 15510,
+        "mais_7_dias": 15139,
+        "mais_15_dias": 15027,
+        "mais_30_dias": 14887,
+        "mais_90_dias": 14540
+    }
+]
