@@ -1,7 +1,13 @@
 [
     {
         "data": "2026-04-13",
-        "ultima_atualizacao": "13/04/2026 13:07",
-        "total": 54494
+        "ultima_atualizacao": "13/04/2026 \u00e0s 14:10",
+        "total_analisado": 3,
+        "comunicou_hoje": 3,
+        "nao_comunicou_hoje": 0,
+        "mais_7_dias": 0,
+        "mais_15_dias": 0,
+        "mais_30_dias": 0,
+        "mais_90_dias": 0
     }
 ]
