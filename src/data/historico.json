@@ -174,5 +174,16 @@
         "mais_15_dias": 1128,
         "mais_30_dias": 986,
         "mais_90_dias": 467
+    },
+    {
+        "data": "2026-05-08",
+        "ultima_atualizacao": "08/05/2026 \u00e0s 11:25",
+        "total_analisado": 54473,
+        "comunicou_hoje": 52911,
+        "nao_comunicou_hoje": 1562,
+        "mais_7_dias": 1073,
+        "mais_15_dias": 945,
+        "mais_30_dias": 799,
+        "mais_90_dias": 279
     }
 ]
